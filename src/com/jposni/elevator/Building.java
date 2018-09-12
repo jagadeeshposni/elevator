@@ -31,7 +31,7 @@ public class Building {
         this.floors[targetFloorNo].upButton = upButton;
         this.floors[targetFloorNo].downButton = downButton;
         
-        Elevator selectedElevator = selectAnElevator();
+        Elevator selectedElevator = selectAnElevator(targetFloorNo);
         int elevatorStartLocation = selectedElevator.getCurrentFloorNo();
         selectedElevator.move(targetFloorNo);
 
@@ -43,7 +43,21 @@ public class Building {
         this.floors[targetFloorNo].downButton = false;
     }
 
-    private Elevator selectAnElevator() {
+    private Elevator selectAnElevator(int targetFloorNo) {
+        Elevator selectedElevator = elevators[0];
+        int distance = Integer.MIN_VALUE;
+        for(int i = 0; i < elevators.length; i++){
+            Elevator currentElevator = elevators[i];
+
+            int distancBetween = getDistanceBetween(currentElevator, selectedElevator);
+        }
         return elevators[0];
+    }
+
+    private int getDistanceBetween(Elevator currentElevator, Elevator selectedElevator) {
+        int currentElevatorCurrentFloorNo = currentElevator.getCurrentFloorNo();
+        int selectedElevatorCurrentFloorNo = selectedElevator.getCurrentFloorNo();
+
+        return Math.floorMod(currentElevatorCurrentFloorNo,selectedElevatorCurrentFloorNo);
     }
 }

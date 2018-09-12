@@ -20,17 +20,17 @@ public class Elevator {
     }
 
     public void move(int endLocation) throws InterruptedException {
-        System.out.println("Moving the elevator......");
+        System.out.println("Trying to move the elevator......");
         if(currentFloorNo < endLocation){
             this.state = State.RUNNING_UP;
-            for(int i = currentFloorNo; i < endLocation; i++){
+            for(int i = currentFloorNo; i <= endLocation; i++){
                 System.out.print(i + " ===>>> ");
                 Thread.sleep(500);
             }
         }else if (currentFloorNo > endLocation){
             this.state= State.RUNNING_DOWN;
-            for(int i = endLocation; i < currentFloorNo; i--){
-                System.out.print(i + " <<<=== ");
+            for(int i = currentFloorNo; i >= endLocation; i--){
+                System.out.print(i + " ===>>> ");
                 Thread.sleep(500);
             }
         }else{
