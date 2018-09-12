@@ -4,21 +4,41 @@ public class Elevator {
 
     private State state;
 
-    private Floor location;
+    private int currentFloorNo;
 
-    public Elevator(State state, Floor defaultLocation){
-        this.state = state;
-        this.location = defaultLocation;
+    public State getState() {
+        return state;
     }
 
-    public void move(int startLocation, int endLocation) throws InterruptedException {
-        System.out.println("Moving the elevator......");
+    public int getCurrentFloorNo() {
+        return currentFloorNo;
+    }
 
-        for(int i = startLocation; i < endLocation; i++){
-            System.out.print(i + " ===>>> ");
-            Thread.sleep(500);
+    public Elevator(State state, int defaultLocation){
+        this.state = state;
+        this.currentFloorNo = defaultLocation;
+    }
+
+    public void move(int endLocation) throws InterruptedException {
+        System.out.println("Moving the elevator......");
+        if(currentFloorNo < endLocation){
+            this.state = State.RUNNING_UP;
+            for(int i = currentFloorNo; i < endLocation; i++){
+                System.out.print(i + " ===>>> ");
+                Thread.sleep(500);
+            }
+        }else if (currentFloorNo > endLocation){
+            this.state= State.RUNNING_DOWN;
+            for(int i = endLocation; i < currentFloorNo; i--){
+                System.out.print(i + " <<<=== ");
+                Thread.sleep(500);
+            }
+        }else{
+            System.out.println("Already situated at " + endLocation + " floor" );
         }
 
-        System.out.println("ENDED");
+        this.state = State.IDLE;
+        this.currentFloorNo = endLocation;
+        System.out.println("STOP");
     }
 }

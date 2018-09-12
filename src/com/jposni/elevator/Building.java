@@ -22,8 +22,28 @@ public class Building {
         }
 
         for(int i = 0; i < noElevators; i++){
-            Elevator elevator = new Elevator(State.IDLE, floors[0]);
+            Elevator elevator = new Elevator(State.IDLE, 0);
             this.elevators[i] = elevator;
         }
+    }
+
+    public void callElevatorFrom(int targetFloorNo, boolean upButton, boolean downButton ) throws InterruptedException {
+        this.floors[targetFloorNo].upButton = upButton;
+        this.floors[targetFloorNo].downButton = downButton;
+        
+        Elevator selectedElevator = selectAnElevator();
+        int elevatorStartLocation = selectedElevator.getCurrentFloorNo();
+        selectedElevator.move(targetFloorNo);
+
+        setFloorButtons(elevatorStartLocation, targetFloorNo);
+    }
+
+    private void setFloorButtons(int elevatorStartLocation, int targetFloorNo) {
+        this.floors[targetFloorNo].upButton = false;
+        this.floors[targetFloorNo].downButton = false;
+    }
+
+    private Elevator selectAnElevator() {
+        return elevators[0];
     }
 }
