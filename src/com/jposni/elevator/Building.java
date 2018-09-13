@@ -22,7 +22,7 @@ public class Building {
         }
 
         for(int i = 0; i < noElevators; i++){
-            Elevator elevator = new Elevator(State.IDLE, 0);
+            Elevator elevator = new Elevator(i, State.IDLE, 0);
             this.elevators[i] = elevator;
         }
     }
@@ -32,32 +32,36 @@ public class Building {
         this.floors[targetFloorNo].downButton = downButton;
         
         Elevator selectedElevator = selectAnElevator(targetFloorNo);
-        int elevatorStartLocation = selectedElevator.getCurrentFloorNo();
+        int elevatorStartFloorNo = selectedElevator.getCurrentFloorNo();
         selectedElevator.move(targetFloorNo);
-
-        setFloorButtons(elevatorStartLocation, targetFloorNo);
+        //write an if condition, to check if the elevator has actually moved to the targetFloorNo
+        setFloorButtons(targetFloorNo, false, false);
     }
 
-    private void setFloorButtons(int elevatorStartLocation, int targetFloorNo) {
-        this.floors[targetFloorNo].upButton = false;
-        this.floors[targetFloorNo].downButton = false;
+    private void setFloorButtons(int targetFloorNo, boolean upButton, boolean downButton) {
+        this.floors[targetFloorNo].upButton = upButton;
+        this.floors[targetFloorNo].downButton = downButton;
     }
 
     private Elevator selectAnElevator(int targetFloorNo) {
-        Elevator selectedElevator = elevators[0];
-        int distance = Integer.MIN_VALUE;
+        Elevator selectedElevator = null;
+        int distance = Integer.MAX_VALUE;
         for(int i = 0; i < elevators.length; i++){
             Elevator currentElevator = elevators[i];
-
-            int distancBetween = getDistanceBetween(currentElevator, selectedElevator);
+            int distanceBetween = getDistanceBetween(currentElevator, targetFloorNo);
+            if (distanceBetween < distance){
+                selectedElevator = currentElevator;
+                distance = distanceBetween;
+            }
         }
-        return elevators[0];
+        return selectedElevator;
     }
 
-    private int getDistanceBetween(Elevator currentElevator, Elevator selectedElevator) {
-        int currentElevatorCurrentFloorNo = currentElevator.getCurrentFloorNo();
-        int selectedElevatorCurrentFloorNo = selectedElevator.getCurrentFloorNo();
-
-        return Math.floorMod(currentElevatorCurrentFloorNo,selectedElevatorCurrentFloorNo);
+    private int getDistanceBetween(Elevator anElevator, int targetFloorNo) {
+        //this could be neagative, covert it to positive.
+        int distance =  anElevator.getCurrentFloorNo() - targetFloorNo;
+        if (distance < 0) {
+            return -1 * distance;
+        }else return distance;
     }
 }

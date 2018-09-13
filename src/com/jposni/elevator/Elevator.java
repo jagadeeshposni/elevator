@@ -2,6 +2,17 @@ package com.jposni.elevator;
 
 public class Elevator {
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+
+    }
+
+    private int id;
+
     private State state;
 
     private int currentFloorNo;
@@ -14,13 +25,14 @@ public class Elevator {
         return currentFloorNo;
     }
 
-    public Elevator(State state, int defaultLocation){
+    public Elevator(int id, State state, int defaultLocation){
+        this.setId(id);
         this.state = state;
         this.currentFloorNo = defaultLocation;
     }
 
     public void move(int endLocation) throws InterruptedException {
-        System.out.println("Trying to move the elevator......");
+        System.out.println("Calling elevator no: " + this.getId());
         if(currentFloorNo < endLocation){
             this.state = State.RUNNING_UP;
             for(int i = currentFloorNo; i <= endLocation; i++){

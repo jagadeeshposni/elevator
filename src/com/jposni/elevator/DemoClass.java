@@ -6,12 +6,17 @@ public class DemoClass {
 
     public static void main(String args[]) throws InterruptedException {
 
-        Building mindspace = new Building(8, 1);
-//        mindspace.elevators[0].move(8);
         System.out.println("Welcome Jagadeesh....");
+        Scanner s = new Scanner(System.in);
+            System.out.println("Tell me, how many floors are in the building..?");
+        int noOfFloors = s.nextInt();
+        System.out.println("And the no of elevators..?");
+        int noOfElevators = s.nextInt();
+        Building mindspace = new Building(noOfFloors, noOfElevators);
+
         for(;;) {
+
             System.out.println("Which floor do you want to go..?");
-            Scanner s = new Scanner(System.in);
             int targetFloorNo = s.nextInt();
 
             mindspace.callElevatorFrom(targetFloorNo, true, false);
