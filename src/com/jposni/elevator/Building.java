@@ -1,6 +1,7 @@
 package com.jposni.elevator;
 
 import com.jposni.elevator.exception.InvalidFloorNoExcpetion;
+import com.jposni.elevator.thread.ElevatorRunnable;
 
 public class Building {
 
@@ -37,7 +38,9 @@ public class Building {
         
         Elevator selectedElevator = selectAnElevator(targetFloorNo);
         int elevatorStartFloorNo = selectedElevator.getCurrentFloorNo();
-        selectedElevator.move(targetFloorNo);
+//        selectedElevator.move(targetFloorNo);
+        ElevatorRunnable runnableElevator = new ElevatorRunnable(selectedElevator, targetFloorNo);
+        runnableElevator.run();
         //write an if condition, to check if the elevator has actually moved to the targetFloorNo
         setFloorButtons(targetFloorNo, false, false);
     }
