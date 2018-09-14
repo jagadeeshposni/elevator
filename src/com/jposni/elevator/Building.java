@@ -40,7 +40,9 @@ public class Building {
         int elevatorStartFloorNo = selectedElevator.getCurrentFloorNo();
 //        selectedElevator.move(targetFloorNo);
         ElevatorRunnable runnableElevator = new ElevatorRunnable(selectedElevator, targetFloorNo);
-        runnableElevator.run();
+        Thread thread = new Thread(runnableElevator);
+        thread.setName("lift" + String.valueOf(selectedElevator.getId()));
+        thread.start();
         //write an if condition, to check if the elevator has actually moved to the targetFloorNo
         setFloorButtons(targetFloorNo, false, false);
     }

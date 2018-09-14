@@ -32,7 +32,8 @@ public class Elevator {
     }
 
     public void move(int endLocation) throws InterruptedException {
-        System.out.println("Calling elevator no: " + this.getId());
+        Thread currentThread = Thread.currentThread();
+        System.out.println("Calling elevator no: " + currentThread.getName());
         if(currentFloorNo < endLocation){
             this.state = State.RUNNING_UP;
             for(int i = currentFloorNo; i <= endLocation; i++){
