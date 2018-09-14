@@ -1,10 +1,12 @@
 package com.jposni.elevator;
 
+import com.jposni.elevator.exception.InvalidFloorNoExcpetion;
+
 import java.util.Scanner;
 
 public class DemoClass {
 
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String args[]) throws InterruptedException, InvalidFloorNoExcpetion {
 
         System.out.println("Welcome Jagadeesh....");
         Scanner s = new Scanner(System.in);

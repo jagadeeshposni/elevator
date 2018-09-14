@@ -1,5 +1,7 @@
 package com.jposni.elevator;
 
+import com.jposni.elevator.exception.InvalidFloorNoExcpetion;
+
 public class Building {
 
     int noFloors;
@@ -27,7 +29,9 @@ public class Building {
         }
     }
 
-    public void callElevatorFrom(int targetFloorNo, boolean upButton, boolean downButton ) throws InterruptedException {
+    public void callElevatorFrom(int targetFloorNo, boolean upButton, boolean downButton ) throws InterruptedException, InvalidFloorNoExcpetion {
+        validateTargetFloorNo(targetFloorNo);
+
         this.floors[targetFloorNo].upButton = upButton;
         this.floors[targetFloorNo].downButton = downButton;
         
@@ -36,6 +40,12 @@ public class Building {
         selectedElevator.move(targetFloorNo);
         //write an if condition, to check if the elevator has actually moved to the targetFloorNo
         setFloorButtons(targetFloorNo, false, false);
+    }
+
+    private void validateTargetFloorNo(int targetFloorNo) throws InvalidFloorNoExcpetion {
+        if( targetFloorNo >= noFloors || 0 > targetFloorNo){
+            throw new InvalidFloorNoExcpetion("Requested floor doesn't exist. LOL!");
+        }
     }
 
     private void setFloorButtons(int targetFloorNo, boolean upButton, boolean downButton) {
